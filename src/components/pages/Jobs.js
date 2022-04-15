@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from "react";
 
 export default function Jobs() {
-    useEffect(() => {
+  const [loading, setLoading] = useState(true);
+  const [jobs, setJobs] = useState();
+
+  useEffect(() => {
     const url = "http://localhost:5000/jobs";
 
     fetch(url, {
       mode: "cors",
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => setJobs(data))
+      .finally(() => {
+        setLoading(false);
+      })
       .catch((err) => handleFetchError(err));
 
     function handleFetchError(err) {
-      const error = document.createElement("p");
-      error.textContent = `${err}`;
-      console.log(error);
+      console.log(err);
     }
   }, []);
 
-  return <div>Jobs list</div>;
+  return (
+    <div>
+      <h2>Jobs list</h2>
+      {console.log(jobs)}
+      {loading || !jobs ? (
+        <div>Loading...</div>
+      ) : (
+        jobs.map((job) => (
+          <div className="job-div" key={job.id}>
+            <p className="job-p">{job.title}</p>
+            <p className="job-p">{job.description}</p>
+            <p className="job-p">{job.location}</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
 }
