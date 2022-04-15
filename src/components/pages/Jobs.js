@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Jobs() {
   const [loading, setLoading] = useState(true);
@@ -30,7 +31,7 @@ export default function Jobs() {
       ) : (
         jobs.map((job) => (
           <div className="job-div" key={job.id}>
-            <p className="job-p">{job.title}</p>
+            <p className="job-p"><Link to={`/jobs/${job.id}`}>{job.title}</Link></p>
             <p className="job-p">{job.description}</p>
             <p className="job-p">{job.location}</p>
           </div>
