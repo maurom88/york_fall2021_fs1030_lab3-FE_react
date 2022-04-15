@@ -13,6 +13,8 @@ export default function Main() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
+          {/* <Route path="/jobs/:id" element={<Job />} /> */}
+          {/* <Route path="/jobseeker:id" element={<JobSeeker />} /> */}
         </Routes>
       </BrowserRouter>
     </main>
