@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function Job() {
+export default function JobEdit() {
   let params = useParams();
-  const jobId = params.id;
 
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState();
 
   useEffect(() => {
-    const url = `http://localhost:5000/jobs/${jobId}`;
+    const url = `http://localhost:5000/jobs/${params.id}`;
 
     fetch(url, {
       mode: "cors",
@@ -36,7 +35,6 @@ export default function Job() {
           <div className="job-div">
             <p className="job-p">{job.description}</p>
             <p className="job-p">{job.location}</p>
-            <Link to={`/jobs/${jobId}/edit`}>Edit job</Link>
           </div>
         </div>
       )}
