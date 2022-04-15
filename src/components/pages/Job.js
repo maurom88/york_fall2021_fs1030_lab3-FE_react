@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function Jobs() {
+export default function Job() {
+  let params = useParams();
+
   const [loading, setLoading] = useState(true);
-  const [jobs, setJobs] = useState();
+  const [job, setJob] = useState();
 
   useEffect(() => {
-    const url = "http://localhost:5000/jobs";
+    const url = `http://localhost:5000/jobs/${params.id}`;
 
     fetch(url, {
       mode: "cors",
     })
       .then((response) => response.json())
-      .then((data) => setJobs(data))
+      .then((data) => setJob(data[0]))
       .finally(() => {
         setLoading(false);
       })
@@ -24,17 +27,16 @@ export default function Jobs() {
 
   return (
     <div>
-      <h2>Jobs list</h2>
-      {loading || !jobs ? (
+      {loading || !job ? (
         <div>Loading...</div>
       ) : (
-        jobs.map((job) => (
-          <div className="job-div" key={job.id}>
-            <p className="job-p">{job.title}</p>
+        <div>
+          <h2>{job?.title}</h2>
+          <div className="job-div">
             <p className="job-p">{job.description}</p>
             <p className="job-p">{job.location}</p>
           </div>
-        ))
+        </div>
       )}
     </div>
   );
