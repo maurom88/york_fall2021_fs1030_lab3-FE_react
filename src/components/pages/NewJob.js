@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 export default function NewJob() {
     let params = useParams();
 
-    const [loading, setLoading] = useState(true);
     const [job, setJob] = useState();
 
     const [publishedAt, setPublishedAt] = useState();
@@ -32,24 +31,6 @@ export default function NewJob() {
         setJobYearlySalary(job.yearly_salary);
     }
 
-    useEffect(() => {
-        const url = `http://localhost:5000/jobs/${params.id}`;
-
-        fetch(url, {
-            mode: "cors",
-        })
-            .then((response) => response.json())
-            .then((data) => setJobValues(data[0]))
-            .finally(() => {
-                setLoading(false);
-            })
-            .catch((err) => handleFetchError(err));
-
-        function handleFetchError(err) {
-            console.log(err);
-        }
-    }, []);
-
     function submitNewJobValues(e) {
         e.preventDefault();
 
@@ -67,7 +48,7 @@ export default function NewJob() {
         };
 
         fetch(url, {
-            method: "put",
+            method: "post",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
@@ -83,6 +64,38 @@ export default function NewJob() {
             });
     }
 
+    function handleJobTitleChange(event) {
+        setJobTitle(event.target.value);
+    }
+
+    function handleJobDescriptionChange(event) {
+        setJobDescription(event.target.value);
+    }
+
+    function handleJobLocationChange(event) {
+        setJobLocation(event.target.value);
+    }
+
+    function handleExpiryDateChange(event) {
+        setExpiresAt(event.target.value);
+    }
+
+    function handleJobDescriptionChange(event) {
+        setJobDescription(event.target.value);
+    }
+
+    function handleStartDateChange(event) {
+        setStartDate(event.target.value);
+    }
+
+    function handleJobHourlyPayChange(event) {
+        setJobHourlyPay(event.target.value);
+    }
+
+    function handleJobYearlySalaryChange(event) {
+        setJobYearlySalary(event.target.value);
+    }
+
     function handleJobDescriptionChange(event) {
         setJobDescription(event.target.value);
     }
@@ -91,15 +104,15 @@ export default function NewJob() {
         <div>
             <h2>New Job</h2>
 
-            <form className="job-div">
+            <form className="job-div" onSubmit={(e) => submitNewJobValues(e)}>
                 <label htmlFor="title">Title: </label>
                 <input
                     name="title"
                     type="text"
                     className="job-p"
-                    onChange={null}
+                    onChange={handleJobTitleChange}
                 ></input>
-    
+
                 <br />
 
                 <label htmlFor="description">Description: </label>
@@ -107,7 +120,7 @@ export default function NewJob() {
                     name="description"
                     type="text"
                     className="job-p"
-                    onChange={null}
+                    onChange={handleJobDescriptionChange}
                 ></input>
 
                 <br />
@@ -117,7 +130,7 @@ export default function NewJob() {
                     name="location"
                     type="text"
                     className="job-p"
-                    onChange={null}
+                    onChange={handleJobLocationChange}
                 ></input>
 
                 <br />
@@ -127,9 +140,9 @@ export default function NewJob() {
                     name="expiresAt"
                     type="date"
                     className="job-p"
-                    onChange={null}
+                    onChange={handleExpiryDateChange}
                 ></input>
-                
+
                 <br />
 
                 <label htmlFor="startDate">Start date: </label>
@@ -137,7 +150,7 @@ export default function NewJob() {
                     name="startDate"
                     type="date"
                     className="job-p"
-                    onChange={null}
+                    onChange={handleStartDateChange}
                 ></input>
 
                 <br />
@@ -147,7 +160,9 @@ export default function NewJob() {
                     name="hourlyPay"
                     type="number"
                     className="job-p"
-                    onChange={null}
+                    min={0}
+                    max={999.99}
+                    onChange={handleJobHourlyPayChange}
                 ></input>
 
                 <br />
@@ -157,11 +172,11 @@ export default function NewJob() {
                     name="yearlySalary"
                     type="number"
                     className="job-p"
-                    onChange={null}
                     min={0}
-                    max={999.99}
+                    max={999999.99}
+                    onChange={handleJobYearlySalaryChange}
                 ></input>
-                            
+
                 <br />
 
                 <label htmlFor="company">Company: </label>
@@ -170,11 +185,12 @@ export default function NewJob() {
                     type="text"
                     className="job-p"
                     onChange={null}
-                    min={0}
-                    max={999999.99}
                 ></input>
 
                 <p>* Leave empty if not applicable</p>
+
+                <button type="submit">Save</button>
+
             </form>
         </div>
     );
