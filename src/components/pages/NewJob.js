@@ -1,50 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 
 export default function NewJob() {
-    let params = useParams();
 
-    const [job, setJob] = useState();
-
-    const [publishedAt, setPublishedAt] = useState();
-    const [expiresAt, setExpiresAt] = useState();
-    const [startDate, setStartDate] = useState();
-    const [companyId, setCompanyId] = useState();
-    const [jobId, setJobId] = useState();
     const [jobTitle, setJobTitle] = useState();
     const [jobDescription, setJobDescription] = useState();
     const [jobLocation, setJobLocation] = useState();
     const [jobHourlyPay, setJobHourlyPay] = useState();
     const [jobYearlySalary, setJobYearlySalary] = useState();
-
-    function setJobValues(job) {
-        setJob(job);
-        setPublishedAt(job.published_at);
-        setExpiresAt(job.expires_at);
-        setStartDate(job.start_date);
-        setCompanyId(job.company_id);
-        setJobId(job.job_id);
-        setJobTitle(job.title);
-        setJobDescription(job.description);
-        setJobLocation(job.location);
-        setJobHourlyPay(job.hourly_pay);
-        setJobYearlySalary(job.yearly_salary);
-    }
+    const [expiresAt, setExpiresAt] = useState();
+    const [startDate, setStartDate] = useState();
+    const [companyId, setCompanyId] = useState();
 
     function submitNewJobValues(e) {
         e.preventDefault();
 
-        const url = `http://localhost:5000/jobs/${params.id}`;
+        const url = `http://localhost:5000/jobs/`;
         const data = {
-            expires_at: expiresAt.slice(0, -2), // MySQL returns an error because of the date formatting. Removing the last character appears to fix it
-            start_date: startDate.slice(0, -2), // Same as above
-            company_id: companyId,
-            job_id: jobId,
             title: jobTitle,
             description: jobDescription,
             location: jobLocation,
+            expires_at: expiresAt.slice(0, -2), // MySQL returns an error because of the date formatting. Removing the last character appears to fix it
+            start_date: startDate.slice(0, -2), // Same as above
             hourly_pay: jobHourlyPay,
             yearly_salary: jobYearlySalary,
+            company_id: companyId,
         };
 
         fetch(url, {
@@ -64,42 +43,6 @@ export default function NewJob() {
             });
     }
 
-    function handleJobTitleChange(event) {
-        setJobTitle(event.target.value);
-    }
-
-    function handleJobDescriptionChange(event) {
-        setJobDescription(event.target.value);
-    }
-
-    function handleJobLocationChange(event) {
-        setJobLocation(event.target.value);
-    }
-
-    function handleExpiryDateChange(event) {
-        setExpiresAt(event.target.value);
-    }
-
-    function handleJobDescriptionChange(event) {
-        setJobDescription(event.target.value);
-    }
-
-    function handleStartDateChange(event) {
-        setStartDate(event.target.value);
-    }
-
-    function handleJobHourlyPayChange(event) {
-        setJobHourlyPay(event.target.value);
-    }
-
-    function handleJobYearlySalaryChange(event) {
-        setJobYearlySalary(event.target.value);
-    }
-
-    function handleJobDescriptionChange(event) {
-        setJobDescription(event.target.value);
-    }
-
     return (
         <div>
             <h2>New Job</h2>
@@ -110,7 +53,7 @@ export default function NewJob() {
                     name="title"
                     type="text"
                     className="job-p"
-                    onChange={handleJobTitleChange}
+                    onChange={e => setJobTitle(e.target.value)}
                 ></input>
 
                 <br />
@@ -120,7 +63,7 @@ export default function NewJob() {
                     name="description"
                     type="text"
                     className="job-p"
-                    onChange={handleJobDescriptionChange}
+                    onChange={e => setJobDescription(e.target.value)}
                 ></input>
 
                 <br />
@@ -130,7 +73,7 @@ export default function NewJob() {
                     name="location"
                     type="text"
                     className="job-p"
-                    onChange={handleJobLocationChange}
+                    onChange={e => setJobLocation(e.target.value)}
                 ></input>
 
                 <br />
@@ -140,7 +83,7 @@ export default function NewJob() {
                     name="expiresAt"
                     type="date"
                     className="job-p"
-                    onChange={handleExpiryDateChange}
+                    onChange={e => setExpiresAt(e.target.value)}
                 ></input>
 
                 <br />
@@ -150,7 +93,7 @@ export default function NewJob() {
                     name="startDate"
                     type="date"
                     className="job-p"
-                    onChange={handleStartDateChange}
+                    onChange={e => setStartDate(e.target.value)}
                 ></input>
 
                 <br />
@@ -162,7 +105,7 @@ export default function NewJob() {
                     className="job-p"
                     min={0}
                     max={999.99}
-                    onChange={handleJobHourlyPayChange}
+                    onChange={e => setJobHourlyPay(e.target.value)}
                 ></input>
 
                 <br />
@@ -174,7 +117,7 @@ export default function NewJob() {
                     className="job-p"
                     min={0}
                     max={999999.99}
-                    onChange={handleJobYearlySalaryChange}
+                    onChange={e => setJobYearlySalary(e.target.value)}
                 ></input>
 
                 <br />
@@ -184,7 +127,7 @@ export default function NewJob() {
                     name="company"
                     type="text"
                     className="job-p"
-                    onChange={null}
+                    onChange={e => setCompanyId(e.target.value)}
                 ></input>
 
                 <p>* Leave empty if not applicable</p>
