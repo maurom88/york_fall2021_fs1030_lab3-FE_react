@@ -6,6 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../pages/Home";
 import Jobs from "../pages/Jobs";
+import NewJob from "../pages/NewJob";
 import Job from "../pages/Job";
 import JobEdit from "../pages/JobEdit";
 
@@ -18,6 +19,7 @@ export default function Main() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/new" element={<NewJob />} />
             <Route path="/jobs/:id" element={<Job />} />
             <Route path="/jobs/:id/edit" element={<JobEdit />} />
             <Route
