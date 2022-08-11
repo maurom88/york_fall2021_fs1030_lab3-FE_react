@@ -15,24 +15,24 @@ export default function NewJob() {
         e.preventDefault();
 
         const url = `http://localhost:5000/jobs/`;
-        const data = {
+        const body = {
             title: jobTitle,
             description: jobDescription,
             location: jobLocation,
-            expires_at: expiresAt.slice(0, -2), // MySQL returns an error because of the date formatting. Removing the last character appears to fix it
-            start_date: startDate.slice(0, -2), // Same as above
+            expires_at: expiresAt,
+            start_date: startDate,
             hourly_pay: jobHourlyPay,
             yearly_salary: jobYearlySalary,
             company_id: companyId,
         };
 
         fetch(url, {
-            method: "post",
+            method: "POST",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(body),
         })
             .then((response) => response.json())
             .then((data) => {
