@@ -11,7 +11,8 @@ export default function Header() {
         }}
       >
         <Link to="/">Home</Link> |{" "}
-        <Link to="/jobs">Jobs</Link>
+        <Link to="/jobs">Jobs</Link> |{" "}
+        <Link to="/jobs/new">New Job</Link>
       </nav>
     </header>
   );
