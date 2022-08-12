@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NewJob() {
+    const navigate = useNavigate();
 
     const [jobTitle, setJobTitle] = useState();
     const [jobDescription, setJobDescription] = useState();
@@ -11,9 +13,7 @@ export default function NewJob() {
     const [startDate, setStartDate] = useState();
     const [companyId, setCompanyId] = useState();
 
-    function submitNewJobValues(e) {
-        e.preventDefault();
-
+    function submitForm(e) {
         const url = `http://localhost:5000/jobs/`;
         const body = {
             title: jobTitle,
@@ -41,6 +41,13 @@ export default function NewJob() {
             .catch((error) => {
                 console.error("Error:", error);
             });
+    }
+
+    async function submitNewJobValues(e) {
+        e.preventDefault();
+
+        await submitForm(e);
+        navigate('./success', { replace: true });
     }
 
     return (
