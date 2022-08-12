@@ -43,7 +43,6 @@ export default function NewJob() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data.insertId);
                 setNewJobId(data.insertId);
             })
             .catch((error) => {
