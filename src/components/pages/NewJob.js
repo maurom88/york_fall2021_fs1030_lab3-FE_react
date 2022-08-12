@@ -130,11 +130,6 @@ export default function NewJob() {
                     onChange={e => setCompanyId(e.target.value)}
                 ></input>
 
-                <br />
-
-                <label htmlFor="uploadedFile">Upload image: </label>
-                <input type="file" name="uploadedFile" />
-
                 <p>* Leave empty if not applicable</p>
 
                 <button type="submit">Save</button>
