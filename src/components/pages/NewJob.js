@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function NewJob() {
@@ -13,7 +13,14 @@ export default function NewJob() {
     const [startDate, setStartDate] = useState();
     const [companyId, setCompanyId] = useState();
 
-    function submitForm(e) {
+    const [newJobId, setNewJobId] = useState();
+
+    useEffect(() => {
+        if (newJobId) navigate(`/jobs/${newJobId}`, { replace: true });
+
+    }, [newJobId])
+
+    async function submitForm() {
         const url = `http://localhost:5000/jobs/`;
         const body = {
             title: jobTitle,
@@ -36,7 +43,8 @@ export default function NewJob() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Success:", data);
+                console.log(data.insertId);
+                setNewJobId(data.insertId);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -47,7 +55,6 @@ export default function NewJob() {
         e.preventDefault();
 
         await submitForm(e);
-        navigate('./success', { replace: true });
     }
 
     return (
