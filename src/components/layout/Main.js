@@ -9,7 +9,8 @@ import Jobs from "../pages/Jobs";
 import NewJob from "../pages/NewJob";
 import Job from "../pages/Job";
 import JobEdit from "../pages/JobEdit";
-import ImgUploadPage from "../pages/ImgUploadPage"
+import JobImgUploadPage from "../pages/JobImgUploadPage";
+import ImgUploadPage from "../pages/ImgUploadPage";
 
 export default function Main() {
   return (
@@ -23,6 +24,7 @@ export default function Main() {
             <Route path="/jobs/new" element={<NewJob />} />
             <Route path="/jobs/:id" element={<Job />} />
             <Route path="/jobs/:id/edit" element={<JobEdit />} />
+            <Route path="/jobs/:id/upload" element={<JobImgUploadPage />} />
             <Route path="/job_seeker/image-upload" element={<ImgUploadPage />} />
             <Route
               path="*"
